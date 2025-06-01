@@ -26,10 +26,10 @@ namespace consoleToDoApp
                 switch (choice)
                 {
                     case "1":
-                        //ShowTasks();
+                        ShowTasks();
                         break;
                     case "2":
-                        //AddTask();
+                        AddTask();
                         break;
                     case "3":
                         //DeleteTask();
@@ -43,6 +43,47 @@ namespace consoleToDoApp
                 }
 
             }
+        }
+
+        static void AddTask()
+        {
+            Console.WriteLine("What is your next task?");
+            string task = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(task))
+            {
+                todoList.Add(task);
+                Console.WriteLine("Added new task");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong with your task entry");
+            }
+            WaitKeyAction();
+        }
+
+
+        static void ShowTasks()
+        {
+            Console.Clear();
+            Console.WriteLine("Your actual task list: ");
+            if (todoList.Count == 0)
+            {
+                Console.WriteLine("There are no task on your actual list");
+            }
+            else
+            {
+                for (int i = 0; i < todoList.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {todoList[i]}");
+                }
+            }
+            WaitKeyAction();
+        }
+
+        static void WaitKeyAction()
+        {
+            Console.WriteLine("Drücke eine beliebige Taste, um fortzufahren...");
+            Console.ReadKey();
         }
     }
 }
