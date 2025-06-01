@@ -32,7 +32,7 @@ namespace consoleToDoApp
                         AddTask();
                         break;
                     case "3":
-                        //DeleteTask();
+                        DeleteTask();
                         break;
                     case "4":
                         return;
@@ -85,5 +85,46 @@ namespace consoleToDoApp
             Console.WriteLine("Drücke eine beliebige Taste, um fortzufahren...");
             Console.ReadKey();
         }
+
+        static void DeleteTask()
+        {
+            Console.Clear();
+            if (todoList.Count == 0)
+            {
+                Console.WriteLine("There are no tasks to delete.");
+                WaitKeyAction();
+                return;
+            }
+
+            Console.WriteLine("Which task do you want to delete?");
+            for (int i = 0; i < todoList.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {todoList[i]}");
+            }
+
+            Console.Write("Enter the number of the task to delete: ");
+            string input = Console.ReadLine();
+
+            if (int.TryParse(input, out int taskNumber))
+            {
+                if (taskNumber >= 1 && taskNumber <= todoList.Count)
+                {
+                    string deletedTask = todoList[taskNumber - 1];
+                    todoList.RemoveAt(taskNumber - 1);
+                    Console.WriteLine($"Task \"{deletedTask}\" deleted.");
+                }
+                else
+                {
+                    Console.WriteLine("Invalid task number.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Please enter a valid number.");
+            }
+
+            WaitKeyAction();
+        }
+
     }
 }
