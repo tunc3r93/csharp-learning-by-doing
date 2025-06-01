@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,8 @@ namespace consoleToDoApp
                 Console.WriteLine("1. Show tasks");
                 Console.WriteLine("2. Add a task");
                 Console.WriteLine("3. Delete a task");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine("4. Save task list as text file");
+                Console.WriteLine("5. Exit");
                 Console.Write("Choose an option: ");
                 string choice = Console.ReadLine();
 
@@ -35,7 +37,10 @@ namespace consoleToDoApp
                         DeleteTask();
                         break;
                     case "4":
+                        SaveTasksToFile();
                         return;
+                    case "5":
+                        break;
                     default:
                         Console.WriteLine("Invalid input. Press any key to continue...");
                         Console.ReadKey();
@@ -126,5 +131,25 @@ namespace consoleToDoApp
             WaitKeyAction();
         }
 
+        static void SaveTasksToFile()
+        {
+            string filePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                "Downloads",
+                "todoList.txt"
+            );
+
+            try
+            {
+                File.WriteAllLines(filePath, todoList);
+                Console.WriteLine($"Tasks saved successfully to {filePath}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error saving tasks: " + ex.Message);
+            }
+
+            WaitKeyAction();
+        }
     }
 }
